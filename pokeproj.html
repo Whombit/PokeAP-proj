@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Pokémon AP</title>
+        <link rel="icon" type="image/x-icon" href="Pokeball.ico">
+    </head>
+    <style>
+
+@font-face {
+  font-family: 'pokefont';
+  src: url(Pokemon\ Solid.ttf);
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(120deg, #830909, #410909);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+}
+    
+@keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+}
+
+Button{
+  Display:block;
+  Margin: auto;
+  height:100px;
+   width:300px;
+  font-size: 45px;
+  font-family: 'pokefont', sans-serif;
+  color: #ff0000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  animation-name: fade;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  border-width: 0px;
+  text-shadow: 2px 0 #ffd900, -2px 0 #ffd900, 0 2px #ffd900, 0 -2px #ffd900,
+  1px 1px #ffd900, -1px -1px #ffd900, 1px -1px #ffd900, -1px 1px #ffd900;;
+}
+
+@keyframes fade {
+  0% {
+    background-color: #5c0000;
+  }
+  50% {
+    background-color: #470000;
+  }
+  100% {
+    background-color: #2c0000;
+  }
+}
+
+h1{
+  text-align: center;
+  font-size: 48px;
+  color: #ff0000;
+  font-family: 'pokefont', sans-serif;
+  text-shadow: 2px 0 #ffd900, -2px 0 #ffd900, 0 2px #ffd900, 0 -2px #ffd900,
+  1px 1px #ffd900, -1px -1px #ffd900, 1px -1px #ffd900, -1px 1px #ffd900;;
+}
+
+h2{
+  text-align: center;
+  font-size: 40px;
+  color: #ff0000;
+  font-family: 'pokefont', sans-serif;
+  text-shadow: 2px 0 #ffd900, -2px 0 #ffd900, 0 2px #ffd900, 0 -2px #ffd900,
+  1px 1px #ffd900, -1px -1px #ffd900, 1px -1px #ffd900, -1px 1px #ffd900;;
+}
+
+h3{
+  text-align: center;
+  font-size: 20px;
+  color: #ff0000;
+  font-family: 'pokefont', sans-serif;
+  text-shadow: 2px 0 #ffd900, -2px 0 #ffd900, 0 2px #ffd900, 0 -2px #ffd900,
+  1px 1px #ffd900, -1px -1px #ffd900, 1px -1px #ffd900, -1px 1px #ffd900;;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+}
+
+select{
+  display:block;
+  margin: auto;
+  height:30px;
+   width:75px;
+  font-size: 20px;
+  font-family: 'cursive';
+  color: #daa1a1;
+  display: flex;
+  justify-content: right;
+  align-items: right;
+  text-align: center;
+  animation-name: fade;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  border-width: 0px;
+}
+
+p{
+  font-size: 10px;
+  text-align: center;
+}
+    </style>
+
+    <body>
+        <select name="Select Region" id="Region">
+          <option value="kanto">Kanto</option>
+          <option value="johto">Johto</option>
+          <option value="hoenn">Hoenn</option>
+          <option value="sinnoh">Sinnoh</option>
+          <option value="unova">Unova</option>
+          <option value="kalos">Kalos</option>
+          <option value="alola">Alola</option>
+          <option value="galar">Galar</option>
+        </select>
+        <h1>Pokémon to appreciate: </h1><br>
+        <h2 id="pokemon">- pokémon here -</h2><br>
+        <h3 id="id"> pokemon Id</h3>
+        <img id="pokemon-image" src="" class="center">
+        <p>© 2023 Pokémon. © 1995–2023 Nintendo/Creatures Inc./GAME FREAK inc.</p><br>
+        <button onclick="getPokemon()">Get Pokémon</button>
+
+       <script>
+var dictionary = 
+{"kanto": 151,
+"johto": 251,
+"hoenn": 386,
+"sinnoh": 493,
+"unova": 649,
+"kalos": 721,
+"alola": 809,
+"galar": 905}
+
+function getPokemon(pokemonId) {
+    randomPokemon();
+    }
+
+    function randomPokemon() {
+        var randomRange = dictionary[Region.value];
+        pokemonId = Math.floor(Math.random() * randomRange) + 1;
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
+        .then(response => response.json())
+        .then(data => {
+        const pokemonName = data.name;
+        const pokemonImage = data.sprites.front_default;
+      document.querySelector('#pokemon').textContent = `Pokemon: ${pokemonName}`;
+      document.querySelector('#pokemon-image').src = pokemonImage;
+      document.querySelector('#id').textContent = `Id: ${pokemonId}`;
+      console.log(pokemonId);
+})
+.catch(error => console.error(error));
+}
+       </script>
+    </body>
+</html>
